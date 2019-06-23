@@ -1,3 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <declare-styleable name="BndrsntChoiceLayout">
+        <attr name="choice_one_text" format="string"/>
+        <attr name="choice_two_text" format="string"/>
+        <attr name="choice_three_text" format="string"/>
+        <attr name="no_of_choices" format="enum">
+            <enum name="single_choice" value="1"/>
+            <enum name="two_choices" value="2"/>
+            <enum name="three_choices" value="3"/>
+        </attr>
+        <attr name="reveal_mode" format="boolean"/>
+    </declare-styleable>
 </resources>
