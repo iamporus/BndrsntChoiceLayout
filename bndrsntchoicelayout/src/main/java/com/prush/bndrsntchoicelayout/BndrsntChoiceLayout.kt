@@ -106,18 +106,18 @@ class BndrsntChoiceLayout : RelativeLayout {
                 val value = it.animatedValue as Float
                 if (value >= 1) {
 
-                    startBndrsntchTImer(duration, onTimerElapsedListener)
+                    startBndrsntchTimer(duration, onTimerElapsedListener)
                 }
 
             }
             objectAnimator.start()
 
         } else {
-            startBndrsntchTImer(duration, onTimerElapsedListener)
+            startBndrsntchTimer(duration, onTimerElapsedListener)
         }
     }
 
-    private fun startBndrsntchTImer(
+    private fun startBndrsntchTimer(
         duration: Long,
         onTimerElapsedListener: OnTimerElapsedListener
     ) {
