@@ -3,18 +3,18 @@
        android:layout_width="match_parent"
        android:layout_height="wrap_content">
     <com.prush.bndrsntchtimer.BndrsntchTimer
-            android:id="@+id/timer"
+            android:id="@+id/bndrSntchTimer"
             android:layout_width="match_parent"
             android:layout_height="4dp"
             android:layout_alignParentTop="true"/>
     <LinearLayout
-            android:id="@+id/linear_layout"
+            android:id="@+id/choiceLayout"
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/timer">
+            android:layout_below="@+id/bndrSntchTimer">
         <TextView
-                android:id="@+id/choice_one_textview"
+                android:id="@+id/choiceOneTextView"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:gravity="center"
@@ -23,7 +23,7 @@
                 android:layout_weight="1"/>
 
         <TextView
-                android:id="@+id/choice_two_textview"
+                android:id="@+id/choiceTwoTextView"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:gravity="center"
@@ -34,13 +34,13 @@
     <View
             android:id="@+id/line"
             android:background="@android:color/darker_gray"
-            android:layout_below="@+id/linear_layout"
+            android:layout_below="@+id/choiceLayout"
             android:layout_width="match_parent"
             android:alpha=".5"
             android:layout_margin="8dp"
             android:layout_height="1dp"/>
     <TextView
-            android:id="@+id/choice_single_textview"
+            android:id="@+id/choiceSingleTextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/line"

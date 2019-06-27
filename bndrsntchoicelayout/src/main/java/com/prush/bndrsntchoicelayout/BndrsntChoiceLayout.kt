@@ -6,24 +6,18 @@ import android.content.Context
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.View
-import android.widget.LinearLayout
 import android.widget.RelativeLayout
-import android.widget.TextView
-import com.prush.bndrsntchtimer.BndrsntchTimer
+import kotlinx.android.synthetic.main.choice_layout.view.*
 
 class BndrsntChoiceLayout : RelativeLayout {
-
-    private val choiceLayout: LinearLayout
-    private val choiceOneTextView: TextView
-    private val choiceTwoTextView: TextView
-    private val singleChoiceTextView: TextView
-    private val bndrsntchTimer: BndrsntchTimer
 
     private var numberOfChoices: Int = 0
     private var choiceOneText: String? = null
     private var choiceTwoText: String? = null
     private var choiceThreeText: String? = null
     private var bRevealMode: Boolean = false
+
+    private var onChoiceSelectedListener: OnChoiceSelectedListener? = null
 
     /**
      * Callback to be invoked when Timer is elaspsed.
@@ -34,6 +28,11 @@ class BndrsntChoiceLayout : RelativeLayout {
          *
          */
         fun onTimerElapsed()
+    }
+
+    interface OnChoiceSelectedListener {
+
+        fun onChoiceSelected(id: Int, choiceText: String)
     }
 
     constructor(context: Context) :
@@ -48,12 +47,6 @@ class BndrsntChoiceLayout : RelativeLayout {
         defStyle
     ) {
         LayoutInflater.from(context).inflate(R.layout.choice_layout, this, true)
-
-        singleChoiceTextView = findViewById(R.id.choice_single_textview)
-        choiceLayout = findViewById(R.id.linear_layout)
-        choiceOneTextView = findViewById(R.id.choice_one_textview)
-        choiceTwoTextView = findViewById(R.id.choice_two_textview)
-        bndrsntchTimer = findViewById(R.id.timer)
 
         if (attributeSet != null) {
 
@@ -72,28 +65,61 @@ class BndrsntChoiceLayout : RelativeLayout {
             when (numberOfChoices) {
                 1 -> {
                     choiceLayout.visibility = View.GONE
-                    singleChoiceTextView.text = choiceOneText
+                    choiceSingleTextView.text = choiceOneText
+                    choiceSingleTextView.setOnClickListener {
+                        onChoiceSelected(R.id.choiceSingleTextView, choiceOneText ?: "")
+                    }
                 }
                 2 -> {
                     choiceLayout.visibility = View.VISIBLE
-                    singleChoiceTextView.visibility = View.GONE
+                    choiceSingleTextView.visibility = View.GONE
 
                     choiceOneTextView.text = choiceOneText
                     choiceTwoTextView.text = choiceTwoText
+
+                    choiceOneTextView.setOnClickListener {
+                        onChoiceSelected(R.id.choiceOneTextView, choiceOneText ?: "")
+                    }
+
+                    choiceTwoTextView.setOnClickListener {
+                        onChoiceSelected(R.id.choiceTwoTextView, choiceTwoText ?: "")
+                    }
                 }
                 3 -> {
                     choiceLayout.visibility = View.VISIBLE
-                    singleChoiceTextView.visibility = View.VISIBLE
+                    choiceSingleTextView.visibility = View.VISIBLE
 
                     choiceOneTextView.text = choiceOneText
                     choiceTwoTextView.text = choiceTwoText
-                    singleChoiceTextView.text = choiceThreeText
+                    choiceSingleTextView.text = choiceThreeText
+
+                    choiceOneTextView.setOnClickListener {
+                        onChoiceSelected(R.id.choiceOneTextView, choiceOneText ?: "")
+                    }
+
+                    choiceTwoTextView.setOnClickListener {
+                        onChoiceSelected(R.id.choiceTwoTextView, choiceTwoText ?: "")
+                    }
+
+                    choiceSingleTextView.setOnClickListener {
+                        onChoiceSelected(R.id.choiceSingleTextView, choiceThreeText ?: "")
+                    }
                 }
             }
 
             // keep the view hidden in the beginning
             alpha = if (bRevealMode) 0f else 1f
         }
+    }
+
+    private fun onChoiceSelected(id: Int, choiceText: String) {
+
+        onChoiceSelectedListener?.onChoiceSelected(id, choiceText)
+        //stop progress
+
+        // change choice backgrounds
+
+        //cleanup
     }
 
     public fun startTimer(duration: Long, onTimerElapsedListener: OnTimerElapsedListener) {
@@ -121,7 +147,7 @@ class BndrsntChoiceLayout : RelativeLayout {
         duration: Long,
         onTimerElapsedListener: OnTimerElapsedListener
     ) {
-        bndrsntchTimer.start(duration) { elapsedDuration, totalDuration ->
+        bndrSntchTimer.start(duration) { elapsedDuration, totalDuration ->
 
             if (elapsedDuration >= totalDuration) {
                 onTimerElapsedListener.onTimerElapsed()
@@ -129,9 +155,13 @@ class BndrsntChoiceLayout : RelativeLayout {
         }
     }
 
+    public fun setOnChoiceSelectedListener(onChoiceSelectedListener: OnChoiceSelectedListener) {
+        this.onChoiceSelectedListener = onChoiceSelectedListener
+    }
+
 
     fun getLifeCycleObserver(): LifecycleObserver {
-        return bndrsntchTimer.lifecycleObserver
+        return bndrSntchTimer.lifecycleObserver
     }
 
 }
