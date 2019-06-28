@@ -10,5 +10,7 @@
             <enum name="three_choices" value="3"/>
         </attr>
         <attr name="reveal_mode" format="boolean"/>
+        <attr name="default_choice_color" format="color"/>
+        <attr name="selected_choice_color" format="color"/>
     </declare-styleable>
 </resources>
