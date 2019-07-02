@@ -12,5 +12,6 @@
         <attr name="reveal_mode" format="boolean"/>
         <attr name="default_choice_color" format="color"/>
         <attr name="selected_choice_color" format="color"/>
+        <attr name="randomize_choice" format="boolean"/>
     </declare-styleable>
 </resources>
