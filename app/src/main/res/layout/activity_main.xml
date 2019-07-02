@@ -5,7 +5,7 @@
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@android:color/black"
+        android:background="@android:color/darker_gray"
         tools:context=".MainActivity">
 
     <com.prush.bndrsntchoicelayout.BndrsntChoiceLayout
@@ -15,6 +15,7 @@
             app:choice_one_text="YES"
             app:choice_two_text="NO"
             app:choice_three_text="WHATEVER"
+            app:randomize_choice="true"
             android:background="@android:color/black"
             app:reveal_mode="false"
             android:id="@+id/bndrnstChoiceLayout"

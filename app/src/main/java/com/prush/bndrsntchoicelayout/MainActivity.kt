@@ -2,7 +2,7 @@ package com.prush.bndrsntchoicelayout
 
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
-import android.widget.Toast
+import android.util.Log
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
@@ -11,25 +11,27 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        bndrnstChoiceLayout.postDelayed({
+        if (savedInstanceState == null) {
+            bndrnstChoiceLayout.postDelayed({
 
-            bndrnstChoiceLayout.startTimer(10000, object : BndrsntChoiceLayout.OnTimerElapsedListener {
-                override fun onTimerElapsed() {
-                    Toast.makeText(applicationContext, "Finished", Toast.LENGTH_SHORT).show()
-                }
-            })
+                bndrnstChoiceLayout.startTimer(10000, object : BndrsntChoiceLayout.OnTimerElapsedListener {
+                    override fun onTimerElapsed() {
+                        Log.d("MainActivity", "Finished")
+                    }
+                })
 
-        }, 2000)
-
+            }, 2000)
+        }
         bndrnstChoiceLayout.setOnChoiceSelectedListener(object : BndrsntChoiceLayout.OnChoiceSelectedListener {
             override fun onChoiceSelected(id: Int, choiceText: String) {
-                Toast.makeText(applicationContext, "selected: $choiceText", Toast.LENGTH_SHORT).show()
+                Log.d("MainActivity", "selected: $choiceText")
 
             }
 
         })
 
         lifecycle.addObserver(bndrnstChoiceLayout.getLifeCycleObserver())
+
 
     }
 }
