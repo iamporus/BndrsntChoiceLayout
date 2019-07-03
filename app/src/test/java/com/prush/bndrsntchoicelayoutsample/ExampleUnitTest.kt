@@ -1,4 +1,4 @@
-package com.prush.bndrsntchoicelayout
+package com.prush.bndrsntchoicelayoutsample
 
 import org.junit.Test
 
