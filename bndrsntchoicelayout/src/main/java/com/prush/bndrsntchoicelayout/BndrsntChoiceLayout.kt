@@ -36,20 +36,51 @@ class BndrsntChoiceLayout : RelativeLayout, View.OnClickListener {
         private const val SELECTED_CHOICE_COLOR = android.R.color.white
     }
 
-    private var numberOfChoices: Int = 0
-    private var choiceOneText: String? = null
-    private var choiceTwoText: String? = null
-    private var choiceThreeText: String? = null
-    private var bRevealMode: Boolean = false
-    private var bRandomizeChoice: Boolean = false
+    var numberOfChoices: Int = 0
+        set(value) {
+            field = value
+            initLayout()
+        }
+
+    var choiceOneText: String? = null
+        set(value) {
+            field = value
+            choiceOneTextView.text = value
+        }
+
+    var choiceTwoText: String? = null
+        set(value) {
+            field = value
+            choiceTwoTextView.text = value
+        }
+
+    var choiceThreeText: String? = null
+        set(value) {
+            field = value
+            choiceSingleTextView.text = value
+        }
+
+    var bRevealMode: Boolean = false
+        set(revealMode) {
+            field = revealMode
+            alpha = if (revealMode) 0f else 1f
+        }
+
+    var bRandomizeChoice: Boolean = false
 
     @ColorInt
-    private var defaultChoiceColor: Int = 0
+    var defaultChoiceColor: Int = 0
+        set(value) {
+            field = value
+            choiceOneTextView.setTextColor(value)
+            choiceTwoTextView.setTextColor(value)
+            choiceSingleTextView.setTextColor(value)
+        }
 
     @ColorInt
-    private var selectedChoiceColor: Int = 0
+    var selectedChoiceColor: Int = 0
 
-    private var onChoiceSelectedListener: OnChoiceSelectedListener? = null
+    var onChoiceSelectedListener: OnChoiceSelectedListener? = null
 
     /**
      * Callback to be invoked when Timer is elaspsed.
@@ -108,40 +139,48 @@ class BndrsntChoiceLayout : RelativeLayout, View.OnClickListener {
 
             typedArray.recycle()
 
-            when (numberOfChoices) {
-                1 -> {
-                    choiceLayout.visibility = View.GONE
-                    choiceSingleTextView.text = choiceOneText
-                }
-                2 -> {
-                    choiceLayout.visibility = View.VISIBLE
-                    choiceSingleTextView.visibility = View.GONE
-
-                    choiceOneTextView.text = choiceOneText
-                    choiceTwoTextView.text = choiceTwoText
-                }
-                3 -> {
-                    choiceLayout.visibility = View.VISIBLE
-                    choiceSingleTextView.visibility = View.VISIBLE
-
-                    choiceOneTextView.text = choiceOneText
-                    choiceTwoTextView.text = choiceTwoText
-                    choiceSingleTextView.text = choiceThreeText
-
-                }
-            }
-
-            choiceOneTextView.setOnClickListener(this)
-            choiceTwoTextView.setOnClickListener(this)
-            choiceSingleTextView.setOnClickListener(this)
-
-            // keep the view hidden in the beginning
-            alpha = if (bRevealMode) 0f else 1f
-
-            choiceOneTextView.setTextColor(defaultChoiceColor)
-            choiceTwoTextView.setTextColor(defaultChoiceColor)
-            choiceSingleTextView.setTextColor(defaultChoiceColor)
         }
+
+        initLayout()
+
+    }
+
+    private fun initLayout() {
+
+        // keep the view hidden in the beginning
+        alpha = if (bRevealMode) 0f else 1f
+
+        when (numberOfChoices) {
+            1 -> {
+                choiceLayout.visibility = View.GONE
+                choiceSingleTextView.text = choiceOneText
+            }
+            2 -> {
+                choiceSingleTextView.visibility = View.GONE
+
+                choiceLayout.visibility = View.VISIBLE
+                choiceOneTextView.text = choiceOneText
+                choiceTwoTextView.text = choiceTwoText
+            }
+            3 -> {
+                choiceLayout.visibility = View.VISIBLE
+                choiceSingleTextView.visibility = View.VISIBLE
+
+                choiceOneTextView.text = choiceOneText
+                choiceTwoTextView.text = choiceTwoText
+                choiceSingleTextView.text = choiceThreeText
+
+            }
+        }
+
+        choiceOneTextView.setOnClickListener(this)
+        choiceTwoTextView.setOnClickListener(this)
+        choiceSingleTextView.setOnClickListener(this)
+
+
+        choiceOneTextView.setTextColor(defaultChoiceColor)
+        choiceTwoTextView.setTextColor(defaultChoiceColor)
+        choiceSingleTextView.setTextColor(defaultChoiceColor)
     }
 
     override fun onClick(view: View?) {
@@ -168,7 +207,7 @@ class BndrsntChoiceLayout : RelativeLayout, View.OnClickListener {
 
     }
 
-    public fun startTimer(duration: Long, onTimerElapsedListener: OnTimerElapsedListener) {
+    fun startTimer(duration: Long, onTimerElapsedListener: OnTimerElapsedListener) {
 
         if (bRevealMode) {
             val objectAnimator = ObjectAnimator.ofFloat(this, "alpha", 0f, 1f)
@@ -215,11 +254,6 @@ class BndrsntChoiceLayout : RelativeLayout, View.OnClickListener {
             }
         }
     }
-
-    public fun setOnChoiceSelectedListener(onChoiceSelectedListener: OnChoiceSelectedListener) {
-        this.onChoiceSelectedListener = onChoiceSelectedListener
-    }
-
 
     fun getLifeCycleObserver(): LifecycleObserver {
         return bndrSntchTimer.lifecycleObserver
