@@ -48,16 +48,34 @@ class BndrsntChoiceLayout : RelativeLayout, View.OnClickListener {
             choiceOneTextView.text = value
         }
 
+    var choiceOneTag: Any? = null
+        set(value) {
+            field = value
+            choiceOneTextView.tag = value
+        }
+
     var choiceTwoText: String? = null
         set(value) {
             field = value
             choiceTwoTextView.text = value
         }
 
+    var choiceTwoTag: Any? = null
+        set(value) {
+            field = value
+            choiceTwoTextView.tag = value
+        }
+
     var choiceThreeText: String? = null
         set(value) {
             field = value
             choiceSingleTextView.text = value
+        }
+
+    var choiceThreeTag: Any? = null
+        set(value) {
+            field = value
+            choiceSingleTextView.tag = value
         }
 
     var bRevealMode: Boolean = false
