@@ -246,6 +246,11 @@ class BndrsntChoiceLayout : RelativeLayout, View.OnClickListener {
         }
     }
 
+    fun resetTimer()
+    {
+        bndrSntchTimer.reset()
+    }
+
     private fun startBndrsntchTimer(
         duration: Long,
         onTimerElapsedListener: OnTimerElapsedListener
