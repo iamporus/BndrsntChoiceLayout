@@ -28,6 +28,7 @@ import android.widget.RelativeLayout
 import kotlinx.android.synthetic.main.choice_layout.view.*
 import java.util.*
 
+@Suppress("unused")
 class BndrsntChoiceLayout : RelativeLayout, View.OnClickListener {
 
     companion object {
@@ -219,8 +220,6 @@ class BndrsntChoiceLayout : RelativeLayout, View.OnClickListener {
                     onChoiceSelectedListener?.onChoiceSelected(R.id.choiceSingleTextView, choiceThreeText ?: "")
                 }
             }
-
-            bndrSntchTimer.reset()
         }
 
     }
@@ -246,8 +245,9 @@ class BndrsntChoiceLayout : RelativeLayout, View.OnClickListener {
         }
     }
 
-    fun resetTimer()
+    fun reset()
     {
+        initLayout()
         bndrSntchTimer.reset()
     }
 
